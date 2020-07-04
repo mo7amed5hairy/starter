@@ -20,3 +20,15 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('verified'
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::group(['prefix' => LaravelLocalization::setLocale(),	'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]], function()
+{
+Route::group(['prefix'=>'offers','namespace'=>'Front'],function (){
+
+    Route::get('all_offers','OffersController@get_offers');
+    Route::get('create','OffersController@create');
+    Route::post('store','OffersController@store')->name('store.offers');
+
+
+});
+});
